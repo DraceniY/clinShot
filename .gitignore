@@ -1,0 +1,4 @@
+*.tmp
+*vcf.gz
+*tbi
+*md5
