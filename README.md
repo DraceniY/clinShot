@@ -24,12 +24,14 @@ requests==2.22.0
 os-sys==2.1.4
 
 # Usage 
-A brief guide of how to use `clinShot` 
-In setup file, setuptools package allows `complementTools.pyx` to pass to compiled extension C/C++ file. The following command line to run the setup script :
+A brief guide of how to use `clinShot` :
+
+In setup file, the setuptools and cythonize packages allow `complementTools.pyx` to compile in extension C/C++ file. 
 
 ```
 python setup.py build_ext --inplace
 ```
+
 Once done, run the main script following the manual :
 
 ```
