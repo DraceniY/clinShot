@@ -28,5 +28,44 @@ OPTIONS:
 
 ```
 
+# Output
+The tool creates two json files: ​ nodes.json (clinical variations)and ​ links.json ​ (links between clinvar IDs (ID) and dbsnp IDs (RS)).
+### nodes.json :
+```
+[{
+"CHROM": "1",
+"POS": 1014042,
+"ID": "475283",
+"REF": "G",
+"ALT": "A",
+"AF_ESP": 0.00546,
+"AF_EXAC": 0.00165,
+"AF_TGP": 0.00619,
+"ALLELEID": 446939
+}]
+```
+### links.json
+```
+[{
+"_from": "475283",
+"_to": "143888043"
+}]
+and links.json:
+[{
+"_from": "475283",
+"_to": "143888043"
+}]
+```
+
+# Dependencies
+python=3.6.8
+scikit-allel==1.3.2
+argparse==1.4.0
+pandas==0.25.0
+wget==3.2
+beautifulsoup4==4.9.3
+requests==2.22.0
+os-sys==2.1.4
+
 # Copyright
 YD - 2021
