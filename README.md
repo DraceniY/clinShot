@@ -8,8 +8,23 @@ While `clinShot` use several python package, you need to use dockerfile to insta
 
 # Usage 
 A brief guide of how to use `clinShot` 
+In setup file, setuptools package allows `complementTools.pyx` to pass to compiled extension C/C++ file. The following command line to run the setup script :
 
 ```
+python setup.py build_ext --inplace
+```
+Once done, run the main script following the manual :
+
+```
+USAGE: main.py [OPTIONS]
+OPTIONS:
+  -url URL                  URL to NCBI Clinvar page. This should not return
+                            direct vcf file. [required] 
+                            
+  -vcf VCF                  Name of the vcf file available in the NCBI Clinvar page.
+  
+  -output OUTPUT            Path to desired output folder. Defaults to the
+                            same place as the specified output folder.
 
 ```
 
