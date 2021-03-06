@@ -1,10 +1,27 @@
 # clinShot
 
 `clinShot` is a tool that provides latest [Clinvar](https://www.ncbi.nlm.nih.gov/clinvar/) database in json format for [Grch38](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.26/) version. 
-`clinShot` downloads and analyzes a VCF file in your choice (in case you want to precise the file) or clinvar VCF file from [ncbi database](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/). Then, it extracts clinical variations and links between clinvar IDs (ID) and dbsnp IDs (RS) and save clinical data in json format files.
+`clinShot` downloads and analyzes a VCF file in your choice (in case you want to precise the file) or clinvar VCF file from [ncbi database](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/). Then, it extracts clinical variations and links between clinvar IDs (ID) and dbsnp IDs (RS) and save the data in json format.
 
 # Installation
 While `clinShot` use several python package, you need to use dockerfile to install all packages and dependencies before to lunch the pipeline.
+
+# Dependencies
+python=3.6.8
+
+scikit-allel==1.3.2
+
+argparse==1.4.0
+
+pandas==0.25.0
+
+wget==3.2
+
+beautifulsoup4==4.9.3
+
+requests==2.22.0
+
+os-sys==2.1.4
 
 # Usage 
 A brief guide of how to use `clinShot` 
@@ -27,9 +44,10 @@ OPTIONS:
                             same place as the specified output folder.
 
 ```
+You can run `run.sh` as prototype.
 
 # Output
-The tool creates two json files: ​ nodes.json (clinical variations)and ​ links.json ​ (links between clinvar IDs (ID) and dbsnp IDs (RS)).
+The tool creates two json files: nodes.json (clinical variations) and links.json (links between clinvar IDs (ID) and dbsnp IDs (RS)).
 ### nodes.json :
 ```
 [{
@@ -56,16 +74,6 @@ and links.json:
 "_to": "143888043"
 }]
 ```
-
-# Dependencies
-python=3.6.8
-scikit-allel==1.3.2
-argparse==1.4.0
-pandas==0.25.0
-wget==3.2
-beautifulsoup4==4.9.3
-requests==2.22.0
-os-sys==2.1.4
 
 # Copyright
 YD - 2021
