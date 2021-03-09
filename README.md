@@ -14,7 +14,7 @@ pandas==0.25.0\
 wget==3.2\
 beautifulsoup4==4.9.3\
 requests==2.22.0\
-os-sys==2.1.4\
+os-sys==2.1.4
 
 # Usage 
 A brief guide of how to use `clinShot` :
