@@ -7,21 +7,14 @@
 While `clinShot` use several python package, you need to use dockerfile to install all packages and dependencies before to lunch the pipeline.
 
 # Dependencies
-python=3.6.8
-
-scikit-allel==1.3.2
-
-argparse==1.4.0
-
-pandas==0.25.0
-
-wget==3.2
-
-beautifulsoup4==4.9.3
-
-requests==2.22.0
-
-os-sys==2.1.4
+python==3.6.8\
+scikit-allel==1.3.2\
+argparse==1.4.0\
+pandas==0.25.0\
+wget==3.2\
+beautifulsoup4==4.9.3\
+requests==2.22.0\
+os-sys==2.1.4\
 
 # Usage 
 A brief guide of how to use `clinShot` :
@@ -46,7 +39,7 @@ OPTIONS:
                             same place as the specified output folder.
 
 ```
-You can run `run.sh` as prototype.
+You can run the pipeline by typing `bash run.sh`.
 
 # Output
 The tool creates two json files: nodes.json (clinical variations) and links.json (links between clinvar IDs (ID) and dbsnp IDs (RS)).
