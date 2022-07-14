@@ -1,25 +1,20 @@
 # clinShot
 
-`clinShot` is a tool that provides latest [Clinvar](https://www.ncbi.nlm.nih.gov/clinvar/) database in json format for [Grch38](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.26/) version. 
-`clinShot` downloads and analyzes a VCF file in your choice (in case you want to precise the file) or clinvar VCF file from [ncbi database](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/). Then, it extracts clinical variations and links between clinvar IDs (ID) and dbsnp IDs (RS) and save the data in json format.
+`clinShot` is a tool that provides latest [Clinvar](https://www.ncbi.nlm.nih.gov/clinvar/) database in json format for Homo sapiens (human) genome assembly [Grch38](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.26/) version. 
+`clinShot` downloads and analyzes a VCF file in your choice (in case you want to precise the file) or clinvar VCF file from [ncbi database](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/). Then, it extracts clinical variations, links them with clinvar IDs (ID) and dbsnp IDs (RS).
 
 # Installation
-While `clinShot` use several python package, you need to use dockerfile to install all packages and dependencies before to lunch the pipeline.
 
-# Dependencies
-python==3.6.8\
-scikit-allel==1.3.2\
-argparse==1.4.0\
-pandas==0.25.0\
-wget==3.2\
-beautifulsoup4==4.9.3\
-requests==2.22.0\
-os-sys==2.1.4
+`clinShot` uses several python packages, you need to use dockerfile to install all packages and dependencies before to lunch the pipeline.
+```
+docker build --tag clinshot .
+```
 
 # Usage 
+
 A brief guide of how to use `clinShot` :
 
-In setup file, the setuptools and cythonize packages allow `complementTools.pyx` to compile in extension C/C++ file. 
+The setup file `setup.py` cythonizes `complementTools.pyx` packages by compiling them in C/C++, following this command line:
 
 ```
 python setup.py build_ext --inplace
@@ -39,7 +34,7 @@ OPTIONS:
                             same place as the specified output folder.
 
 ```
-You can run the pipeline by typing `bash run.sh`.
+You can run the pipeline by typing `bash run.sh` or try this example : `python main.py -url https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/ -output_directory clinical_output`.
 
 # Output
 The tool creates two json files: nodes.json (clinical variations) and links.json (links between clinvar IDs (ID) and dbsnp IDs (RS)).
@@ -71,4 +66,4 @@ and links.json:
 ```
 
 # Copyright
-YD - 2021
+Yasmine Draceni - 2021

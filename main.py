@@ -1,14 +1,19 @@
 import argparse
 import os
+from pathlib import Path
+from typing import List
 
 import allel
 import requests
+import structlog
 from bs4 import BeautifulSoup
 
 import complementTools
 
+logging = structlog.getLogger()
 
-def main(clinvar_url, vcf_file_name, output_directory):
+
+def main(clinvar_url: str, vcf_file_name: str, output_directory: Path):
     """
     Main function downloads vcf file, extract clinical variations and links between clinvar IDs (ID) and dbsnp IDs (RS) then write data in json format files.
 
@@ -18,16 +23,11 @@ def main(clinvar_url, vcf_file_name, output_directory):
 
     """
     # Check if output directory is provided
-    if output_directory != None:
-        if os.path.exists(output_directory):
-            # Remove / at the end of output directory in case if the user put it in the path
-            if output_directory.endswith("/"):
-                output_directory = output_directory[:-1]
-        else:
-            os.mkdir(output_directory)
+    if output_directory != None and not output_directory.exists():
+        output_directory.mkdir(parents=True, exist_ok=True)
     else:
-        os.system("mkdir output")
-        output_directory = os.getcwd() + "/output"
+        output_directory = Path(os.getcwd()) / "output"
+        output_directory.mkdir(parents=True, exist_ok=True)
 
     # Parse ncbi clinvar page
     page = requests.get(clinvar_url)
@@ -44,12 +44,8 @@ def main(clinvar_url, vcf_file_name, output_directory):
     if vcf_file_name != None:
         # Verify if the file is in the ncbi clinvar ftp
         if vcf_file_name not in vcf_files_list:
-            print(
-                "This file "
-                + vcf_file_name
-                + " is not in "
-                + clinvar_url
-                + " website, please use vcf file available in the website."
+            logging.error(
+                f"This file {vcf_file_name} is not in {clinvar_url} website, please use vcf file available in the website."
             )
             exit()
     # Case file name is not provided, it downloads the first vcf file of the clinvar page
@@ -57,41 +53,43 @@ def main(clinvar_url, vcf_file_name, output_directory):
         vcf_file_name = vcf_files_list[0]
 
     # Download files in vcf, tbi and md5 formats
-    print(
-        "Start to download "
-        + vcf_file_name
-        + ", "
-        + vcf_file_name
-        + ".tbi, "
-        + vcf_file_name
-        + ".md5  files :"
+    logging.info(
+        f"Start to download {vcf_file_name} {vcf_file_name}.tbi, {vcf_file_name}.md5  files :"
     )
+    # Force conversion to string because wget.py accept string format and not Path in line 529
     vcf_file = complementTools.download_url(
-        clinvar_url + vcf_file_name, output_directory
+        f"{clinvar_url}{vcf_file_name}", str(output_directory)
     )
     _ = complementTools.download_url(
-        clinvar_url + vcf_file_name + ".tbi", output_directory
+        f"{clinvar_url}{vcf_file_name}.tbi", str(output_directory)
     )
     _ = complementTools.download_url(
-        clinvar_url + vcf_file_name + ".md5", output_directory
+        f"{clinvar_url}{vcf_file_name}.md5", str(output_directory)
     )
 
     # Parse vcf file and extract clinical data
-    print("Currently parsing vcf file.")
+    logging.info("Currently parsing vcf file.")
     vcf_data = allel.vcf_to_dataframe(vcf_file, fields=["variants/*", "calldata/*"])
     nods_data, links_data = complementTools.extract_clinical_data(vcf_data)
 
     # Save data to json files
-    print("Nodes and Links json files are saved in " + output_directory)
-    nods_data.to_json(output_directory + "/nodes.json", orient="records")
-    links_data.to_json(output_directory + "/links.json", orient="records")
+    logging.info(f"Nodes and Links json files are saved in {output_directory}")
+    nods_data.to_json(output_directory / "nodes.json", orient="records")
+    links_data.to_json(output_directory / "links.json", orient="records")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-url", help="Takes ftp clinvar url.", required=True)
-    parser.add_argument("-vcf", help="Vcf file name in clinvar ftp file.")
-    parser.add_argument("-output", help="Path for json data output.")
+    parser.add_argument(
+        "-url",
+        help="URL clinvar eg:https://ftp.ncbi.nlm.nih.gov/.",
+        required=True,
+        type=str,
+    )
+    parser.add_argument(
+        "-vcf", help="VCF file name for clinvar ftp file.", type=str.lower
+    )
+    parser.add_argument("-output", help="Path for files json output.", type=Path)
     args = parser.parse_args()
 
     main(args.url, args.vcf, args.output)
