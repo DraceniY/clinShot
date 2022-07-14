@@ -5,22 +5,13 @@
 
 # Installation
 
-`clinShot` uses several python packages, you need to use dockerfile to install all packages and dependencies before to lunch the pipeline.
-```
-docker build --tag clinshot .
-```
+`clinShot` uses several python packages. `Docker` allows to manage the environment and dependencies. Please see the (instructions)[https://docs.docker.com/engine/install/ubuntu/] to install `Docker`.
 
 # Usage 
 
 A brief guide of how to use `clinShot` :
 
-The setup file `setup.py` cythonizes `complementTools.pyx` packages by compiling them in C/C++, following this command line:
-
-```
-python setup.py build_ext --inplace
-```
-
-Once done, run the main script following the manual :
+The setup file `setup.py` cythonizes `complementTools.pyx` packages by compiling them in C/C++, and use the compiled tools to maximize the run. The main script has three parameters as folowwing :
 
 ```
 USAGE: main.py [OPTIONS]
@@ -34,10 +25,30 @@ OPTIONS:
                             same place as the specified output folder.
 
 ```
-You can run the pipeline by typing `bash run.sh` or try this example : `python main.py -url https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/ -output_directory clinical_output`.
+
+## Run from the container Docker : 
+To facilitate environmental management, you can easily run and get the results from `Docker` container in the `output` folder using those command lines:
+
+```
+# Build Docker image
+docker build --tag clinshot .
+# Run the pipeline using one parameter (-url) and get the output results in output folder
+docker container run -v $PWD/output:/output clinshot:latest -url https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/ -vcf homo_sapiens
+```
+
+## Run locally :
+You need to install anaconda to install packages. Please see the (instructions)[https://docs.anaconda.com/anaconda/install/] if you don't have anaconda, then you can run locally:
+
+```
+conda env create -f requirements.yml
+conda activate clinshot
+python main.py -url https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/ -vcf homo_sapiens -output_directory clinical_output
+```
 
 # Output
+
 The tool creates two json files: nodes.json (clinical variations) and links.json (links between clinvar IDs (ID) and dbsnp IDs (RS)).
+
 ### nodes.json :
 ```
 [{
