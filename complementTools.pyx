@@ -1,6 +1,7 @@
 import pandas as pd
 import wget
 
+
 def download_url(url, output_directory):
 	"""
 		This function downloads url and saves the file in the provided output directory.
