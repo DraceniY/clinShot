@@ -1,8 +1,10 @@
+from pathlib import Path
+
 import pandas as pd
 import wget
 
 
-def download_url(url, output_directory):
+def download_url(url :str, output_directory : str) ->Path:
 	"""
 		This function downloads url and saves the file in the provided output directory.
 
@@ -11,14 +13,14 @@ def download_url(url, output_directory):
 		output_directory: <str> Path of output directory.
 
 		Returns:
-		vcf_file: <str> Path of the downloaded file.
+		vcf_file: <Path> Path of the downloaded file.
 
 	"""
-	vcf_file = wget.download(url, out=output_directory)	
+	vcf_file : Path = wget.download(url, out=output_directory)	
 
 	return vcf_file
 
-def extract_clinical_data(vcf_data):
+def extract_clinical_data(vcf_data: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
 	"""
 		This function extracts data from dataframe of clinical variations and returns two dataframes with specific fields.
 
