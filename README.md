@@ -37,7 +37,7 @@ docker container run -v $PWD/output:/output clinshot:latest -url https://ftp.ncb
 ```
 
 ## Run locally :
-You need to install anaconda to install packages. If you don't have anaconda please see [instructions](https://docs.anaconda.com/anaconda/install/) to install it, then run locally:
+You need to install [anaconda](https://www.anaconda.com/) to install packages. If you don't have anaconda please see [instructions](https://docs.anaconda.com/anaconda/install/) to install it, then run locally:
 
 ```
 conda env create -f requirements.yml
