@@ -47,7 +47,7 @@ python main.py -url https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/ -vcf ho
 
 # Output
 
-The tool creates two json files: nodes.json (clinical variations) and links.json (links between clinvar IDs (ID) and dbsnp IDs (RS)).
+The tool creates two json files: nodes.json (clinical variations) and links.json (links between clinvar IDs (ID) and dbsnp IDs (RS).
 
 ### nodes.json :
 ```
