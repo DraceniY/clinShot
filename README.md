@@ -5,24 +5,24 @@
 
 # Installation
 
-`clinShot` uses several python packages. `Docker` allows to manage the environment and dependencies. Please see the (instructions)[https://docs.docker.com/engine/install/ubuntu/] to install `Docker`.
+`clinShot` uses several python packages. `Docker` allows to manage the environment and dependencies. Please see the [instructions](https://docs.docker.com/engine/install/ubuntu/) to install `Docker`.
 
 # Usage 
 
 A brief guide of how to use `clinShot` :
 
-The setup file `setup.py` cythonizes `complementTools.pyx` packages by compiling them in C/C++, and use the compiled tools to maximize the run. The main script has three parameters as folowwing :
+The setup file `setup.py` cythonizes `complementTools.pyx` packages by compiling them in C/C++, and use the compiled tools to maximize the run. The main script has three parameters as following :
 
 ```
 USAGE: main.py [OPTIONS]
 OPTIONS:
   -url URL                  URL to NCBI Clinvar page. This should not return
-                            direct vcf file. [required] 
+                            direct vcf file. [Required] 
                             
-  -vcf VCF                  Name of the vcf file available in the NCBI Clinvar page.
+  -vcf VCF                  Name of the vcf file available in the NCBI Clinvar page. [Optional]
   
   -output OUTPUT            Path to desired output folder. Defaults to the
-                            same place as the specified output folder.
+                            same place as the specified output folder. [Optional]
 
 ```
 
@@ -37,7 +37,7 @@ docker container run -v $PWD/output:/output clinshot:latest -url https://ftp.ncb
 ```
 
 ## Run locally :
-You need to install anaconda to install packages. Please see the (instructions)[https://docs.anaconda.com/anaconda/install/] if you don't have anaconda, then you can run locally:
+You need to install anaconda to install packages. If you don't have anaconda please see [instructions](https://docs.anaconda.com/anaconda/install/) to install it, then run locally:
 
 ```
 conda env create -f requirements.yml
